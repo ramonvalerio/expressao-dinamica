@@ -31,24 +31,24 @@ namespace ExpressaoDinamica.View
 
         private void txtExpressao_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '\r')
-            {
-                btnCalcular_Click(null, null);
-                return;
-            }
+            //if (e.KeyChar == '\r')
+            //{
+            //    btnCalcular_Click(null, null);
+            //    return;
+            //}
 
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) 
-                && (e.KeyChar != '.')
-                && (e.KeyChar != ',')
-                && (e.KeyChar != '+')
-                && (e.KeyChar != '-')
-                && (e.KeyChar != '*')
-                && (e.KeyChar != '/')
-                && (e.KeyChar != ' ')
-                && (e.KeyChar != '(')
-                && (e.KeyChar != ')')
-                )
-                e.Handled = true;
+            //if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) 
+            //    && (e.KeyChar != '.')
+            //    && (e.KeyChar != ',')
+            //    && (e.KeyChar != '+')
+            //    && (e.KeyChar != '-')
+            //    && (e.KeyChar != '*')
+            //    && (e.KeyChar != '/')
+            //    && (e.KeyChar != ' ')
+            //    && (e.KeyChar != '(')
+            //    && (e.KeyChar != ')')
+            //    )
+            //    e.Handled = true;
         }
 
         private void btnCalcular_Click(object sender, EventArgs e)

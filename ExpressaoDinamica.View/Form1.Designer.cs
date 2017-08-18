@@ -159,8 +159,8 @@
             this.cbLinguagem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLinguagem.FormattingEnabled = true;
             this.cbLinguagem.Items.AddRange(new object[] {
-            "Python",
             "NCalc",
+            "Python",
             "CSharp (nativo)"});
             this.cbLinguagem.Location = new System.Drawing.Point(262, 28);
             this.cbLinguagem.Name = "cbLinguagem";

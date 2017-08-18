@@ -2,6 +2,7 @@
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting;
+using NCalc;
 
 namespace ExpressaoDinamica.Application.Service
 {
@@ -12,9 +13,10 @@ namespace ExpressaoDinamica.Application.Service
         {
             return _engine.CreateScriptSourceFromString(expressao, SourceCodeKind.Expression).Execute<TNumber>();
         }
-        public TNumber CalcularExpressaoFromNCalc<TNumber>(string expressao)
+        public double CalcularExpressaoFromNCalc(string expressao)
         {
-            throw new NotImplementedException();
+            var e = new Expression(expressao);
+            return Convert.ToDouble(e.Evaluate());
         }
     }
 }

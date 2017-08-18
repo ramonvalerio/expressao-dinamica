@@ -28,6 +28,12 @@ namespace ExpressaoDinamica.View
 
         private void txtExpressao_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == '\r')
+            {
+                btnCalcular_Click(null, null);
+                return;
+            }
+
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) 
                 && (e.KeyChar != '.')
                 && (e.KeyChar != ',')
@@ -36,6 +42,8 @@ namespace ExpressaoDinamica.View
                 && (e.KeyChar != '*')
                 && (e.KeyChar != '/')
                 && (e.KeyChar != ' ')
+                && (e.KeyChar != '(')
+                && (e.KeyChar != ')')
                 )
                 e.Handled = true;
         }
@@ -45,7 +53,17 @@ namespace ExpressaoDinamica.View
             try
             {
                 int tamanhoLista = Convert.ToInt32(txtQtdIteracoes.Text);
-                CalcularExpressaoFromPython(tamanhoLista);
+
+                switch (cbLinguagem.Text)
+                {
+                    case "Python":
+                        CalcularExpressaoFromPython(tamanhoLista,0 , 10);
+                        break;
+
+                    case "NCalc":
+                        CalcularExpressaoFromNCalc(tamanhoLista, 0, 10);
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -58,13 +76,9 @@ namespace ExpressaoDinamica.View
             return txtExpressao.Text.Trim();
         }
 
-        private void CalcularExpressaoFromPython(int tamanhoLista)
+        private void CalcularExpressaoFromPython(int tamanhoLista, int min, int max)
         {
-            int min = 0;
-            int max = 10;
-
             var random = new Random();
-
             int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
 
             var stopwatch = new Stopwatch();
@@ -97,11 +111,52 @@ namespace ExpressaoDinamica.View
             }
 
             stopwatch.Stop();
+            lblPython.Text = stopwatch.Elapsed.TotalSeconds.ToString();
+        }
+
+        private void CalcularExpressaoFromNCalc(int tamanhoLista, int min, int max)
+        {
+            var random = new Random();
+            int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            for (int i = 0; i < lista.Count(); i++)
+            {
+                switch (cbTipoValor.Text)
+                {
+                    case "double":
+                        var resultado1 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
+                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado1, cbTipoValor.Text, Environment.NewLine));
+                        break;
+
+                    case "decimal":
+                        var resultado2 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
+                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado2, cbTipoValor.Text, Environment.NewLine));
+                        break;
+
+                    case "int":
+                        var resultado3 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
+                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado3, cbTipoValor.Text, Environment.NewLine));
+                        break;
+
+                    case "string":
+                        var resultado4 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
+                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado4, cbTipoValor.Text, Environment.NewLine));
+                        break;
+                }
+            }
+
+            stopwatch.Stop();
+            lblNCalc.Text = stopwatch.Elapsed.TotalSeconds.ToString();
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)
         {
             txtResultado.Clear();
+            lblPython.Text = string.Empty;
+            lblNCalc.Text = string.Empty;
         }
     }
 }

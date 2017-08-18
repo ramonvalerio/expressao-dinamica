@@ -4,6 +4,6 @@
     {
         TNumber CalcularExpressaoFromPython<TNumber>(string expressao);
 
-        TNumber CalcularExpressaoFromNCalc<TNumber>(string expressao);
+        double CalcularExpressaoFromNCalc(string expressao);
     }
 }

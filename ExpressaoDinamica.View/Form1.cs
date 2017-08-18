@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace ExpressaoDinamica.View
 {
@@ -15,6 +15,8 @@ namespace ExpressaoDinamica.View
             _expressaoService = new app.ExpressaoService();
 
             InitializeComponent();
+
+            dgvResultado.AutoGenerateColumns = true;
 
             cbTipoValor.SelectedIndex = 0;
             cbLinguagem.SelectedIndex = 0;
@@ -63,6 +65,10 @@ namespace ExpressaoDinamica.View
                     case "NCalc":
                         CalcularExpressaoFromNCalc(tamanhoLista, 0, 10);
                         break;
+
+                    case "CSharp (nativo)":
+                        CalcularExpressaoFromCSharp(tamanhoLista, 0, 10);
+                        break;
                 }
             }
             catch (Exception ex)
@@ -78,85 +84,64 @@ namespace ExpressaoDinamica.View
 
         private void CalcularExpressaoFromPython(int tamanhoLista, int min, int max)
         {
-            var random = new Random();
-            int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
+            //var random = new Random();
+            //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
+
+            var resultado = new List<double>(tamanhoLista);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            for (int i = 0; i < lista.Count(); i++)
-            {
-                switch (cbTipoValor.Text)
-                {
-                    case "double":
-                        var resultado1 = _expressaoService.CalcularExpressaoFromPython<double>(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado1, cbTipoValor.Text, Environment.NewLine));
-                        break;
-
-                    case "decimal":
-                        var resultado2 = _expressaoService.CalcularExpressaoFromPython<decimal>(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado2, cbTipoValor.Text, Environment.NewLine));
-                        break;
-
-                    case "int":
-                        var resultado3 = _expressaoService.CalcularExpressaoFromPython<int>(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado3, cbTipoValor.Text, Environment.NewLine));
-                        break;
-
-                    case "string":
-                        var resultado4 = _expressaoService.CalcularExpressaoFromPython<string>(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado4, cbTipoValor.Text, Environment.NewLine));
-                        break;
-                }
-            }
+            for (int i = 0; i < tamanhoLista; i++)
+                resultado.Add(_expressaoService.CalcularExpressaoFromPython<double>(getExpression()));
 
             stopwatch.Stop();
-            lblPython.Text = stopwatch.Elapsed.TotalSeconds.ToString();
+
+            dgvResultado.DataSource = resultado;
+            lblPython.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
         }
 
         private void CalcularExpressaoFromNCalc(int tamanhoLista, int min, int max)
         {
-            var random = new Random();
-            int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
+            //var random = new Random();
+            //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
+
+            var resultado = new List<double>(tamanhoLista);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            for (int i = 0; i < lista.Count(); i++)
-            {
-                switch (cbTipoValor.Text)
-                {
-                    case "double":
-                        var resultado1 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado1, cbTipoValor.Text, Environment.NewLine));
-                        break;
-
-                    case "decimal":
-                        var resultado2 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado2, cbTipoValor.Text, Environment.NewLine));
-                        break;
-
-                    case "int":
-                        var resultado3 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado3, cbTipoValor.Text, Environment.NewLine));
-                        break;
-
-                    case "string":
-                        var resultado4 = _expressaoService.CalcularExpressaoFromNCalc(getExpression());
-                        txtResultado.AppendText(string.Format("{0} = {1} as {2}{3}", getExpression(), resultado4, cbTipoValor.Text, Environment.NewLine));
-                        break;
-                }
-            }
+            for (int i = 0; i < tamanhoLista; i++)
+                resultado.Add(_expressaoService.CalcularExpressaoFromNCalc(getExpression()));
 
             stopwatch.Stop();
-            lblNCalc.Text = stopwatch.Elapsed.TotalSeconds.ToString();
+
+            dgvResultado.DataSource = resultado;
+            lblNCalc.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
+        }
+
+        private void CalcularExpressaoFromCSharp(int tamanhoLista, int min, int max)
+        {
+            var resultado = new List<double>(tamanhoLista);
+
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            for (int i = 0; i < tamanhoLista; i++)
+                resultado.Add(_expressaoService.CalcularExpressaoFromCSharp(getExpression()));
+
+            stopwatch.Stop();
+
+            dgvResultado.DataSource = resultado;
+            lblCSharp.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)
         {
-            txtResultado.Clear();
+            dgvResultado.DataSource = null;
             lblPython.Text = string.Empty;
             lblNCalc.Text = string.Empty;
+            lblCSharp.Text = string.Empty;
         }
     }
 }

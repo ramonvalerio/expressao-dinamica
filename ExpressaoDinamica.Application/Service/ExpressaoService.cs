@@ -18,5 +18,9 @@ namespace ExpressaoDinamica.Application.Service
             var e = new Expression(expressao);
             return Convert.ToDouble(e.Evaluate());
         }
+        public double CalcularExpressaoFromCSharp(string expressao)
+        {
+            return 2 + (3 * 5);
+        }
     }
 }

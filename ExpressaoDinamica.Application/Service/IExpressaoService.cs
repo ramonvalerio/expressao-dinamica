@@ -5,5 +5,7 @@
         TNumber CalcularExpressaoFromPython<TNumber>(string expressao);
 
         double CalcularExpressaoFromNCalc(string expressao);
+
+        double CalcularExpressaoFromCSharp(string expressao);
     }
 }

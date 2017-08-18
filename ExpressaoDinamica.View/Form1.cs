@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections.Generic;
+using ExpressaoDinamica.Application.DTO;
 
 namespace ExpressaoDinamica.View
 {
@@ -87,13 +88,13 @@ namespace ExpressaoDinamica.View
             //var random = new Random();
             //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
 
-            var resultado = new List<double>(tamanhoLista);
+            var resultado = new List<ValueObject>(tamanhoLista);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             for (int i = 0; i < tamanhoLista; i++)
-                resultado.Add(_expressaoService.CalcularExpressaoFromPython<double>(getExpression()));
+                resultado.Add(new ValueObject { Date = DateTime.Now.Date, Value = _expressaoService.CalcularExpressaoFromPython<double>(getExpression()) });
 
             stopwatch.Stop();
 
@@ -106,13 +107,13 @@ namespace ExpressaoDinamica.View
             //var random = new Random();
             //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
 
-            var resultado = new List<double>(tamanhoLista);
+            var resultado = new List<ValueObject>(tamanhoLista);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             for (int i = 0; i < tamanhoLista; i++)
-                resultado.Add(_expressaoService.CalcularExpressaoFromNCalc(getExpression()));
+                resultado.Add(new ValueObject { Date = DateTime.Now.Date, Value = _expressaoService.CalcularExpressaoFromNCalc(getExpression()) });
 
             stopwatch.Stop();
 
@@ -122,13 +123,13 @@ namespace ExpressaoDinamica.View
 
         private void CalcularExpressaoFromCSharp(int tamanhoLista, int min, int max)
         {
-            var resultado = new List<double>(tamanhoLista);
+            var resultado = new List<ValueObject>(tamanhoLista);
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
             for (int i = 0; i < tamanhoLista; i++)
-                resultado.Add(_expressaoService.CalcularExpressaoFromCSharp(getExpression()));
+                resultado.Add(new ValueObject { Date = DateTime.Now.Date, Value = _expressaoService.CalcularExpressaoFromCSharp(getExpression()) });
 
             stopwatch.Stop();
 

@@ -29,16 +29,15 @@ namespace ExpressaoDinamica.View
 
         private void btnGenerateData_Click(object sender, EventArgs e)
         {
+            var dateActual = DateTime.Now;
+            var random = new Random();
+
             try
             {
-                var random = new Random();
-                //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
-                int tamanhoLista = Convert.ToInt32(txtQtdIteracoes.Text);
+                var qtdIteracoes = Convert.ToInt32(txtQtdIteracoes.Text);
+                _data = new List<ValueObject>(qtdIteracoes);
 
-                _data = new List<ValueObject>(tamanhoLista);
-                var dateActual = DateTime.Now;
-
-                for (int i = 0; i < tamanhoLista; i++)
+                for (int i = 0; i < qtdIteracoes; i++)
                     _data.Add(new ValueObject(dateActual.AddMonths(i).Date, random.NextDouble()));
 
                 dgvResultado.DataSource = _data;
@@ -54,6 +53,12 @@ namespace ExpressaoDinamica.View
             if (_data == null)
             {
                 MessageBox.Show("Data Generate is necessary!");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtExpressao.Text))
+            {
+                MessageBox.Show("Expression is necessary!");
                 return;
             }
 
@@ -77,6 +82,12 @@ namespace ExpressaoDinamica.View
             lblPython.Text = string.Empty;
             lblNCalc.Text = string.Empty;
             lblCSharp.Text = string.Empty;
+        }
+
+        private void btnCreateFunction_Click(object sender, EventArgs e)
+        {
+            var formCreateFunction = new FormCreateFunction();
+            formCreateFunction.ShowDialog();
         }
     }
 }

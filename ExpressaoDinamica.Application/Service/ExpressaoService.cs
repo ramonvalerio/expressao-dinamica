@@ -23,6 +23,7 @@ namespace ExpressaoDinamica.Application.Service
                 e.EvaluateFunction += E_EvaluateFunction;
 
                 item.Result = Convert.ToDouble(e.Evaluate());
+                item.FormulaInterpreted = expressao;
             }
 
             return data;

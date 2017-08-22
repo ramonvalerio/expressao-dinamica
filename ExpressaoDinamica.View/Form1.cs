@@ -10,6 +10,7 @@ namespace ExpressaoDinamica.View
     public partial class Form1 : Form
     {
         private readonly app.IExpressaoService _expressaoService;
+        private List<ValueObject> _data;
 
         public Form1()
         {
@@ -18,9 +19,6 @@ namespace ExpressaoDinamica.View
             InitializeComponent();
 
             dgvResultado.AutoGenerateColumns = true;
-
-            cbTipoValor.SelectedIndex = 0;
-            cbLinguagem.SelectedIndex = 0;
         }
 
         private void txtQtdIteracoes_KeyPress(object sender, KeyPressEventArgs e)
@@ -29,48 +27,21 @@ namespace ExpressaoDinamica.View
                 e.Handled = true;
         }
 
-        private void txtExpressao_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //if (e.KeyChar == '\r')
-            //{
-            //    btnCalcular_Click(null, null);
-            //    return;
-            //}
-
-            //if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) 
-            //    && (e.KeyChar != '.')
-            //    && (e.KeyChar != ',')
-            //    && (e.KeyChar != '+')
-            //    && (e.KeyChar != '-')
-            //    && (e.KeyChar != '*')
-            //    && (e.KeyChar != '/')
-            //    && (e.KeyChar != ' ')
-            //    && (e.KeyChar != '(')
-            //    && (e.KeyChar != ')')
-            //    )
-            //    e.Handled = true;
-        }
-
-        private void btnCalcular_Click(object sender, EventArgs e)
+        private void btnGenerateData_Click(object sender, EventArgs e)
         {
             try
             {
+                var random = new Random();
+                //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
                 int tamanhoLista = Convert.ToInt32(txtQtdIteracoes.Text);
 
-                switch (cbLinguagem.Text)
-                {
-                    case "Python":
-                        CalcularExpressaoFromPython(tamanhoLista,0 , 10);
-                        break;
+                _data = new List<ValueObject>(tamanhoLista);
+                var dateActual = DateTime.Now;
 
-                    case "NCalc":
-                        CalcularExpressaoFromNCalc(tamanhoLista, 0, 10);
-                        break;
+                for (int i = 0; i < tamanhoLista; i++)
+                    _data.Add(new ValueObject(dateActual.AddMonths(i).Date, random.NextDouble()));
 
-                    case "CSharp (nativo)":
-                        CalcularExpressaoFromCSharp(tamanhoLista, 0, 10);
-                        break;
-                }
+                dgvResultado.DataSource = _data;
             }
             catch (Exception ex)
             {
@@ -78,63 +49,26 @@ namespace ExpressaoDinamica.View
             }
         }
 
-        private string getExpression()
+        private void btnCalcular_Click(object sender, EventArgs e)
         {
-            return txtExpressao.Text.Trim();
-        }
-
-        private void CalcularExpressaoFromPython(int tamanhoLista, int min, int max)
-        {
-            //var random = new Random();
-            //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
-
-            var resultado = new List<ValueObject>(tamanhoLista);
+            if (_data == null)
+            {
+                MessageBox.Show("Data Generate is necessary!");
+                return;
+            }
 
             var stopwatch = new Stopwatch();
+
             stopwatch.Start();
 
-            for (int i = 0; i < tamanhoLista; i++)
-                resultado.Add(new ValueObject { Date = DateTime.Now.Date, Value = _expressaoService.CalcularExpressaoFromPython<double>(getExpression()) });
+            _data = _expressaoService.CalcularExpressao(_data, txtExpressao.Text.Trim());
 
             stopwatch.Stop();
 
-            dgvResultado.DataSource = resultado;
-            lblPython.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
-        }
+            dgvResultado.DataSource = null;
+            dgvResultado.DataSource = _data;
 
-        private void CalcularExpressaoFromNCalc(int tamanhoLista, int min, int max)
-        {
-            //var random = new Random();
-            //int[] lista = Enumerable.Repeat(0, tamanhoLista).Select(i => random.Next(min, max)).ToArray();
-
-            var resultado = new List<ValueObject>(tamanhoLista);
-
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            for (int i = 0; i < tamanhoLista; i++)
-                resultado.Add(new ValueObject { Date = DateTime.Now.Date, Value = _expressaoService.CalcularExpressaoFromNCalc(getExpression()) });
-
-            stopwatch.Stop();
-
-            dgvResultado.DataSource = resultado;
             lblNCalc.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
-        }
-
-        private void CalcularExpressaoFromCSharp(int tamanhoLista, int min, int max)
-        {
-            var resultado = new List<ValueObject>(tamanhoLista);
-
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
-
-            for (int i = 0; i < tamanhoLista; i++)
-                resultado.Add(new ValueObject { Date = DateTime.Now.Date, Value = _expressaoService.CalcularExpressaoFromCSharp(getExpression()) });
-
-            stopwatch.Stop();
-
-            dgvResultado.DataSource = resultado;
-            lblCSharp.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)

@@ -1,9 +1,10 @@
 ﻿using System;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
-using Microsoft.Scripting;
 using NCalc;
 using System.Linq;
+using ExpressaoDinamica.Application.DTO;
+using System.Collections.Generic;
 
 namespace ExpressaoDinamica.Application.Service
 {
@@ -11,15 +12,20 @@ namespace ExpressaoDinamica.Application.Service
     {
         private readonly ScriptEngine _engine = Python.CreateEngine();
 
-        public TNumber CalcularExpressaoFromPython<TNumber>(string expressao)
+        public List<ValueObject> CalcularExpressao(List<ValueObject> data, string expressao)
         {
-            return _engine.CreateScriptSourceFromString(expressao, SourceCodeKind.Expression).Execute<TNumber>();
-        }
-        public double CalcularExpressaoFromNCalc(string expressao)
-        {
-            var e = new Expression(expressao);
-            e.EvaluateFunction += E_EvaluateFunction;
-            return Convert.ToDouble(e.Evaluate());
+            //Chamada do Python
+            //return _engine.CreateScriptSourceFromString(expressao, SourceCodeKind.Expression).Execute<TNumber>();
+
+            foreach (var item in data)
+            {
+                var e = new Expression(expressao);
+                e.EvaluateFunction += E_EvaluateFunction;
+
+                item.Result = Convert.ToDouble(e.Evaluate());
+            }
+
+            return data;
         }
 
         private void E_EvaluateFunction(string name, FunctionArgs args)
@@ -57,11 +63,6 @@ namespace ExpressaoDinamica.Application.Service
 
                     break;
             }
-        }
-
-        public double CalcularExpressaoFromCSharp(string expressao)
-        {
-            return Convert.ToDouble(2 + (3 * 5));
         }
     }
 }

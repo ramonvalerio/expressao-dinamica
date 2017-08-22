@@ -65,13 +65,24 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\FunctionDTO.cs" />
     <Compile Include="DTO\ValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ExpressaoService.cs" />
-    <Compile Include="Service\IExpressaoService.cs" />
+    <Compile Include="Service\ExpressaoAppService.cs" />
+    <Compile Include="Service\IExpressaoAppService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExpressaoDinamica.Domain\ExpressaoDinamica.Domain.csproj">
+      <Project>{87025030-f13c-47f7-ab95-18ba6b8ced27}</Project>
+      <Name>ExpressaoDinamica.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExpressaoDinamica.Infrastructure\ExpressaoDinamica.Infrastructure.csproj">
+      <Project>{fad71182-76ca-4fbb-990c-32631020b0fa}</Project>
+      <Name>ExpressaoDinamica.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

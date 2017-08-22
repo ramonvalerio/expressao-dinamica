@@ -9,12 +9,12 @@ namespace ExpressaoDinamica.View
 {
     public partial class Form1 : Form
     {
-        private readonly app.IExpressaoService _expressaoService;
+        private readonly app.IExpressaoAppService _expressaoService;
         private List<ValueObject> _data;
 
         public Form1()
         {
-            _expressaoService = new app.ExpressaoService();
+            _expressaoService = new app.ExpressaoAppService();
 
             InitializeComponent();
 
@@ -66,14 +66,21 @@ namespace ExpressaoDinamica.View
 
             stopwatch.Start();
 
-            _data = _expressaoService.CalcularExpressao(_data, txtExpressao.Text.Trim());
+            try
+            {
+                _data = _expressaoService.CalcularExpressao(_data, txtExpressao.Text.Trim());
+
+                dgvResultado.DataSource = null;
+                dgvResultado.DataSource = _data;
+
+                lblNCalc.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             stopwatch.Stop();
-
-            dgvResultado.DataSource = null;
-            dgvResultado.DataSource = _data;
-
-            lblNCalc.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)

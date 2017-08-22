@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressaoDinamica.View", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressaoDinamica.Application", "ExpressaoDinamica.Application\ExpressaoDinamica.Application.csproj", "{B98CA1CC-63B0-40B1-B53E-956D3EE5DF6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressaoDinamica.Infrastructure", "ExpressaoDinamica.Infrastructure\ExpressaoDinamica.Infrastructure.csproj", "{FAD71182-76CA-4FBB-990C-32631020B0FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpressaoDinamica.Domain", "ExpressaoDinamica.Domain\ExpressaoDinamica.Domain.csproj", "{87025030-F13C-47F7-AB95-18BA6B8CED27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{B98CA1CC-63B0-40B1-B53E-956D3EE5DF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B98CA1CC-63B0-40B1-B53E-956D3EE5DF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B98CA1CC-63B0-40B1-B53E-956D3EE5DF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAD71182-76CA-4FBB-990C-32631020B0FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAD71182-76CA-4FBB-990C-32631020B0FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAD71182-76CA-4FBB-990C-32631020B0FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD71182-76CA-4FBB-990C-32631020B0FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87025030-F13C-47F7-AB95-18BA6B8CED27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87025030-F13C-47F7-AB95-18BA6B8CED27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87025030-F13C-47F7-AB95-18BA6B8CED27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87025030-F13C-47F7-AB95-18BA6B8CED27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

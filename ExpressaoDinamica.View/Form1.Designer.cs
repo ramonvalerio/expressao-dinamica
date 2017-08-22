@@ -281,6 +281,11 @@
             this.txtQtdIteracoes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtQtdIteracoes.Location = new System.Drawing.Point(3, 16);
+            this.txtQtdIteracoes.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
             this.txtQtdIteracoes.Name = "txtQtdIteracoes";
             this.txtQtdIteracoes.Size = new System.Drawing.Size(127, 20);
             this.txtQtdIteracoes.TabIndex = 23;

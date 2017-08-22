@@ -73,7 +73,7 @@ namespace ExpressaoDinamica.View
                 dgvResultado.DataSource = null;
                 dgvResultado.DataSource = _data;
 
-                lblNCalc.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " segundos.");
+                lblNCalc.Text = string.Format("{0} {1}", stopwatch.Elapsed.TotalSeconds, " seconds.");
             }
             catch (Exception ex)
             {
@@ -86,9 +86,7 @@ namespace ExpressaoDinamica.View
         private void btnLimpar_Click(object sender, EventArgs e)
         {
             dgvResultado.DataSource = null;
-            lblPython.Text = string.Empty;
             lblNCalc.Text = string.Empty;
-            lblCSharp.Text = string.Empty;
         }
 
         private void btnCreateFunction_Click(object sender, EventArgs e)

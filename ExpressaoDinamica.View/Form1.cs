@@ -39,8 +39,8 @@ namespace ExpressaoDinamica.View
 
                 for (int i = 0; i < qtdIteracoes; i++)
                 {
-                    //_data.Add(new ValueObject(dateActual.AddMonths(i).Date, random.NextDouble() * 100));
-                    _data.Add(new ValueObject(dateActual.AddMonths(i).Date, 0 + (random.Next(0, 100))));
+                    _data.Add(new ValueObject(dateActual.AddMonths(i).Date, Math.Round(random.NextDouble(), 2)));
+                    //_data.Add(new ValueObject(dateActual.AddMonths(i).Date, 0 + (random.Next(0, 100))));
                 }
 
                 dgvResultado.DataSource = _data;

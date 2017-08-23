@@ -38,7 +38,7 @@ namespace ExpressaoDinamica.Application.Service
                     e.EvaluateParameter += E_EvaluateParameter;
 
                     item.InterpretedFormula = expressao;
-                    item.Result = Convert.ToDouble(e.Evaluate());
+                    item.Result = Math.Round(Convert.ToDouble(e.Evaluate()), 2);
                 }
             }
             catch (Exception ex)
@@ -89,9 +89,10 @@ namespace ExpressaoDinamica.Application.Service
             if (function == null)
                 throw new Exception(string.Format("Função {0} não existe.", name));
 
-            var formulaChild = args.Parameters[0].ParsedExpression.ToString().Replace("[", "").Replace("]", "");
+            //var formulaChild = args.Parameters[0].ParsedExpression.ToString().Replace("[", "").Replace("]", "");
+            //var e = new Expression(formulaChild);
 
-            var e = new Expression(formulaChild);
+            var e = new Expression(function.Formula);
             e.EvaluateFunction += E_EvaluateFunction;
             e.EvaluateParameter += E_EvaluateParameter;
             args.Result = Convert.ToDouble(e.Evaluate());

@@ -89,6 +89,14 @@
       <Project>{b98ca1cc-63b0-40b1-b53e-956d3ee5df6e}</Project>
       <Name>ExpressaoDinamica.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExpressaoDinamica.Domain\ExpressaoDinamica.Domain.csproj">
+      <Project>{87025030-f13c-47f7-ab95-18ba6b8ced27}</Project>
+      <Name>ExpressaoDinamica.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExpressaoDinamica.Infrastructure\ExpressaoDinamica.Infrastructure.csproj">
+      <Project>{FAD71182-76CA-4FBB-990C-32631020B0FA}</Project>
+      <Name>ExpressaoDinamica.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

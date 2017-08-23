@@ -1,4 +1,5 @@
 ﻿using ExpressaoDinamica.Domain.Model;
+using System.Collections.Generic;
 
 namespace ExpressaoDinamica.Infrastructure.Repository
 {
@@ -7,5 +8,7 @@ namespace ExpressaoDinamica.Infrastructure.Repository
         void AddFunction(string name, string formula, int amountParameters);
 
         Function GetFunctionByName(string name);
+
+        List<Function> GetAllFunctions();
     }
 }

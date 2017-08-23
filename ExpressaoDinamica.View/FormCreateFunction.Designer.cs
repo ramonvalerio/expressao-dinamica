@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.btnSave = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.txtFormula = new System.Windows.Forms.TextBox();
+            this.txtFunctionName = new System.Windows.Forms.TextBox();
+            this.txtIterations = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIterations)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSave
@@ -48,26 +48,36 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // textBox1
+            // txtFormula
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 65);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(260, 20);
-            this.textBox1.TabIndex = 1;
+            this.txtFormula.Location = new System.Drawing.Point(12, 65);
+            this.txtFormula.Name = "txtFormula";
+            this.txtFormula.Size = new System.Drawing.Size(260, 20);
+            this.txtFormula.TabIndex = 1;
             // 
-            // textBox2
+            // txtFunctionName
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 19);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(260, 20);
-            this.textBox2.TabIndex = 0;
+            this.txtFunctionName.Location = new System.Drawing.Point(12, 19);
+            this.txtFunctionName.Name = "txtFunctionName";
+            this.txtFunctionName.Size = new System.Drawing.Size(260, 20);
+            this.txtFunctionName.TabIndex = 0;
             // 
-            // numericUpDown1
+            // txtIterations
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(13, 111);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 2;
+            this.txtIterations.Location = new System.Drawing.Point(13, 111);
+            this.txtIterations.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.txtIterations.Name = "txtIterations";
+            this.txtIterations.Size = new System.Drawing.Size(120, 20);
+            this.txtIterations.TabIndex = 2;
+            this.txtIterations.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label1
             // 
@@ -104,15 +114,15 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtIterations);
+            this.Controls.Add(this.txtFunctionName);
+            this.Controls.Add(this.txtFormula);
             this.Controls.Add(this.btnSave);
             this.MinimumSize = new System.Drawing.Size(300, 199);
             this.Name = "FormCreateFunction";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Create Function";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIterations)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -121,9 +131,9 @@
         #endregion
 
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.TextBox txtFormula;
+        private System.Windows.Forms.TextBox txtFunctionName;
+        private System.Windows.Forms.NumericUpDown txtIterations;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

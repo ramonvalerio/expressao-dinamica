@@ -9,7 +9,7 @@ namespace ExpressaoDinamica.View
 {
     public partial class Form1 : Form
     {
-        private readonly app.IExpressaoAppService _expressaoService;
+        private readonly app.ExpressaoAppService _expressaoService;
         private List<ValueObject> _data;
 
         public Form1()
@@ -38,7 +38,10 @@ namespace ExpressaoDinamica.View
                 _data = new List<ValueObject>(qtdIteracoes);
 
                 for (int i = 0; i < qtdIteracoes; i++)
-                    _data.Add(new ValueObject(dateActual.AddMonths(i).Date, random.NextDouble()));
+                {
+                    //_data.Add(new ValueObject(dateActual.AddMonths(i).Date, random.NextDouble() * 100));
+                    _data.Add(new ValueObject(dateActual.AddMonths(i).Date, 0 + (random.Next(0, 100))));
+                }
 
                 dgvResultado.DataSource = _data;
             }
@@ -92,7 +95,24 @@ namespace ExpressaoDinamica.View
         private void btnCreateFunction_Click(object sender, EventArgs e)
         {
             var formCreateFunction = new FormCreateFunction();
+            formCreateFunction.FunctionRepository = _expressaoService._functionRepository;
+
             formCreateFunction.ShowDialog();
+
+            var functions = _expressaoService.GetAllFunctions();
+
+            cbFunctionsCreated.Items.Clear();
+
+            foreach (var item in functions)
+            {
+                cbFunctionsCreated.Items.Add(item);
+            }
+
+            cbFunctionsCreated.ValueMember = "Name";
+            cbFunctionsCreated.DisplayMember = "Name";
+
+            if (cbFunctionsCreated.Items.Count > 0)
+                cbFunctionsCreated.SelectedIndex = 0;
         }
     }
 }

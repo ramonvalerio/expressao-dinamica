@@ -54,14 +54,14 @@
             this.tableLayoutPanel1.SetColumnSpan(this.txtExpressao, 3);
             this.txtExpressao.Location = new System.Drawing.Point(3, 58);
             this.txtExpressao.Name = "txtExpressao";
-            this.txtExpressao.Size = new System.Drawing.Size(396, 20);
+            this.txtExpressao.Size = new System.Drawing.Size(398, 20);
             this.txtExpressao.TabIndex = 0;
             // 
             // btnCalcular
             // 
             this.btnCalcular.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCalcular.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCalcular.Location = new System.Drawing.Point(521, 3);
+            this.btnCalcular.Location = new System.Drawing.Point(523, 3);
             this.btnCalcular.Name = "btnCalcular";
             this.tableLayoutPanel1.SetRowSpan(this.btnCalcular, 4);
             this.btnCalcular.Size = new System.Drawing.Size(110, 89);
@@ -76,7 +76,7 @@
             this.btnLimpar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnLimpar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLimpar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLimpar.Location = new System.Drawing.Point(405, 509);
+            this.btnLimpar.Location = new System.Drawing.Point(407, 509);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(226, 36);
             this.btnLimpar.TabIndex = 3;
@@ -137,7 +137,7 @@
             this.dgvResultado.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvResultado.Location = new System.Drawing.Point(3, 98);
             this.dgvResultado.Name = "dgvResultado";
-            this.dgvResultado.Size = new System.Drawing.Size(628, 405);
+            this.dgvResultado.Size = new System.Drawing.Size(630, 405);
             this.dgvResultado.TabIndex = 16;
             // 
             // tableLayoutPanel1
@@ -147,7 +147,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.lblQtdIteracoes, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnLimpar, 3, 5);
             this.tableLayoutPanel1.Controls.Add(this.dgvResultado, 0, 4);
@@ -172,14 +172,13 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(634, 548);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(636, 548);
             this.tableLayoutPanel1.TabIndex = 19;
             // 
             // btnGenerateData
             // 
             this.btnGenerateData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnGenerateData.Location = new System.Drawing.Point(405, 3);
+            this.btnGenerateData.Location = new System.Drawing.Point(407, 3);
             this.btnGenerateData.Name = "btnGenerateData";
             this.tableLayoutPanel1.SetRowSpan(this.btnGenerateData, 4);
             this.btnGenerateData.Size = new System.Drawing.Size(110, 89);
@@ -214,7 +213,7 @@
             this.btnCreateFunction.Location = new System.Drawing.Point(263, 16);
             this.btnCreateFunction.MinimumSize = new System.Drawing.Size(136, 23);
             this.btnCreateFunction.Name = "btnCreateFunction";
-            this.btnCreateFunction.Size = new System.Drawing.Size(136, 23);
+            this.btnCreateFunction.Size = new System.Drawing.Size(138, 23);
             this.btnCreateFunction.TabIndex = 22;
             this.btnCreateFunction.Text = "Create Function";
             this.btnCreateFunction.UseVisualStyleBackColor = true;
@@ -245,7 +244,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnLimpar;
-            this.ClientSize = new System.Drawing.Size(634, 548);
+            this.ClientSize = new System.Drawing.Size(636, 548);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

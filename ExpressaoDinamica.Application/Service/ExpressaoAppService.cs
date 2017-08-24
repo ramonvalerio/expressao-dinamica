@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using ExpressaoDinamica.Infrastructure.Repository;
 using ExpressaoDinamica.Domain.Model;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ExpressaoDinamica.Application.Service
 {
@@ -26,11 +27,10 @@ namespace ExpressaoDinamica.Application.Service
         {
             _data = data.Select(x => { x.Result = null; return x; }).ToList();
 
-            //Chamada do Python
-            //return _engine.CreateScriptSourceFromString(expressao, SourceCodeKind.Expression).Execute<TNumber>();
-
             try
             {
+                var expressions = getFunctionsByFormula(expressao);
+
                 foreach (var item in _data)
                 {
                     var e = new Expression(expressao);
@@ -51,6 +51,39 @@ namespace ExpressaoDinamica.Application.Service
             }
 
             return data;
+        }
+
+        private List<Expression> getFunctionsByFormula(string input)
+        {
+            input = "A(B(C(X)))";
+            var pattern = @"\b[^()]+\((.*)\)$";
+            var regex = new Regex(pattern, RegexOptions.None);
+
+            var result = new List<Expression>();
+            var functions = new List<string>();
+
+            do
+            {
+                functions.Add(input);
+                input = regex.Split(input).SingleOrDefault(x => x != string.Empty);
+            } while (regex.IsMatch(input));
+
+            for (int i = 0; i < functions.Count; i++)
+            {
+                var functionFormat = string.Empty;
+
+                if ((i + 1) < functions.Count)
+                    functionFormat = functions[i].Replace(functions[i + 1], "X");
+                else
+                    functionFormat = functions[i];
+                
+                var expression = new Expression(functionFormat);
+                expression.EvaluateFunction += E_EvaluateFunction;
+                expression.EvaluateParameter += E_EvaluateParameter;
+                result.Add(expression);
+            }
+
+            return result;
         }
 
         public List<Function> GetAllFunctions()
@@ -89,20 +122,21 @@ namespace ExpressaoDinamica.Application.Service
             if (function == null)
                 throw new Exception(string.Format("Função {0} não existe.", name));
 
-            //var formulaChild = args.Parameters[0].ParsedExpression.ToString().Replace("[", "").Replace("]", "");
-            //var e = new Expression(formulaChild);
+            var total = args.Parameters.Count();
 
-            var e = new Expression(function.Formula);
-            e.EvaluateFunction += E_EvaluateFunction;
-            e.EvaluateParameter += E_EvaluateParameter;
-            args.Result = Convert.ToDouble(e.Evaluate());
-
-            //switch (name)
+            // Calcula B
+            //for (int i = 0; i < total; i++)
             //{
-            //    case "exp":
-            //        args.Result = Math.Exp(Convert.ToDouble(args.Parameters[0].Evaluate()));
-            //        break;
+            //    args.Parameters[i] = new Expression(args.Parameters[i].ParsedExpression);
             //}
+
+            //args.Result = Convert.ToDouble(args.Parameters[total - 1].Evaluate());
+
+            // Calcula A
+            //var e = new Expression(function.Formula);
+            //e.EvaluateFunction += E_EvaluateFunction;
+            //e.EvaluateParameter += E_EvaluateParameter;
+            //args.Result = Convert.ToDouble(e.Evaluate());
         }
     }
 }

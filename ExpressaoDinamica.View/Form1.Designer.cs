@@ -233,7 +233,7 @@
             this.txtQtdIteracoes.Size = new System.Drawing.Size(127, 20);
             this.txtQtdIteracoes.TabIndex = 23;
             this.txtQtdIteracoes.Value = new decimal(new int[] {
-            100,
+            1,
             0,
             0,
             0});

@@ -5,10 +5,12 @@ namespace ExpressaoDinamica.Infrastructure.Repository
 {
     public interface IFunctionRepository
     {
-        void AddFunction(string name, string formula, int amountParameters);
+        void Save(Function function);
 
         Function GetFunctionByName(string name);
 
         List<Function> GetAllFunctions();
+
+        void Remove(string name);
     }
 }

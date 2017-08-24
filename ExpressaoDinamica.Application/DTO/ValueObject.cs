@@ -10,8 +10,6 @@ namespace ExpressaoDinamica.Application.DTO
 
         public double? Result { get; set; }
 
-        public string InterpretedFormula { get; set; }
-
         private ValueObject()
         {
 

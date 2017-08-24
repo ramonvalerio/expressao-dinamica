@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Collections.Generic;
 using ExpressaoDinamica.Application.DTO;
+using ExpressaoDinamica.Domain.Model;
 
 namespace ExpressaoDinamica.View
 {
@@ -11,14 +12,18 @@ namespace ExpressaoDinamica.View
     {
         private readonly app.ExpressaoAppService _expressaoService;
         private List<ValueObject> _data;
-
+        private FormCreateFunction _formCreateFunction = new FormCreateFunction();
+        
         public Form1()
         {
             _expressaoService = new app.ExpressaoAppService();
+            _formCreateFunction.FunctionRepository = _expressaoService._functionRepository;
 
             InitializeComponent();
 
             dgvResultado.AutoGenerateColumns = true;
+
+            RefreshFunctionCombo();
         }
 
         private void txtQtdIteracoes_KeyPress(object sender, KeyPressEventArgs e)
@@ -39,7 +44,7 @@ namespace ExpressaoDinamica.View
 
                 for (int i = 0; i < qtdIteracoes; i++)
                 {
-                    _data.Add(new ValueObject(dateActual.AddMonths(i).Date, Math.Round(random.NextDouble(), 2)));
+                    _data.Add(new ValueObject(dateActual.AddDays(i).Date, Math.Round(random.NextDouble(), 2)));
                     //_data.Add(new ValueObject(dateActual.AddMonths(i).Date, 0 + (random.Next(0, 100))));
                 }
 
@@ -94,11 +99,22 @@ namespace ExpressaoDinamica.View
 
         private void btnCreateFunction_Click(object sender, EventArgs e)
         {
-            var formCreateFunction = new FormCreateFunction();
-            formCreateFunction.FunctionRepository = _expressaoService._functionRepository;
+            _formCreateFunction.ShowDialog();
+            RefreshFunctionCombo();
+        }
 
-            formCreateFunction.ShowDialog();
+        private void btnEditFunction_Click(object sender, EventArgs e)
+        {
+            _formCreateFunction.SelectedFunction = cbFunctionsCreated.SelectedItem as Function;
+            _formCreateFunction.IsEdit = true;
+            _formCreateFunction.ShowDialog();
+            _formCreateFunction.IsEdit = false;
 
+            RefreshFunctionCombo();
+        }
+
+        private void RefreshFunctionCombo()
+        {
             var functions = _expressaoService.GetAllFunctions();
 
             cbFunctionsCreated.Items.Clear();
@@ -112,7 +128,15 @@ namespace ExpressaoDinamica.View
             cbFunctionsCreated.DisplayMember = "Name";
 
             if (cbFunctionsCreated.Items.Count > 0)
+            {
                 cbFunctionsCreated.SelectedIndex = 0;
+
+                cbFunctionsCreated.Enabled = true;
+            }
+            else
+            {
+                cbFunctionsCreated.Enabled = false;
+            }
         }
     }
 }

@@ -105,7 +105,11 @@ namespace ExpressaoDinamica.Application.Service
 
         public void AddFunction(string name, string formula, int amountParameters)
         {
-            _functionRepository.AddFunction(name, formula, amountParameters);
+            var function = new Function();
+            function.Name = name;
+            function.Formula = formula;
+            function.AmountParameters = amountParameters;
+            _functionRepository.Save(function);
         }
 
         private FunctionDTO GetFunctionByName(string name)

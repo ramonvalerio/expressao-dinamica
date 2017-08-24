@@ -33,12 +33,23 @@ namespace ExpressaoDinamica.Application.Service
 
                 foreach (var item in _data)
                 {
-                    var e = new Expression(expressao);
-                    e.EvaluateFunction += E_EvaluateFunction;
-                    e.EvaluateParameter += E_EvaluateParameter;
+                    foreach (var e in expressions)
+                    {
+                        var result = e.Evaluate();
 
-                    item.InterpretedFormula = expressao;
-                    item.Result = Math.Round(Convert.ToDouble(e.Evaluate()), 2);
+                        if (item.Result == null)
+                        {
+                            //item.Result = Convert.ToDouble(result);
+                            item.Result = Math.Round(Convert.ToDouble(result), 2);
+                        }
+                        else
+                        {
+                            //item.Result = item.Result + Convert.ToDouble(result);
+                            item.Result = item.Result + Math.Round(Convert.ToDouble(result), 2);
+                        }
+                    }
+
+                    _index++;
                 }
             }
             catch (Exception ex)
@@ -55,7 +66,6 @@ namespace ExpressaoDinamica.Application.Service
 
         private List<Expression> getFunctionsByFormula(string input)
         {
-            input = "A(B(C(X)))";
             var pattern = @"\b[^()]+\((.*)\)$";
             var regex = new Regex(pattern, RegexOptions.None);
 
@@ -83,6 +93,8 @@ namespace ExpressaoDinamica.Application.Service
                 result.Add(expression);
             }
 
+            result.Reverse();
+
             return result;
         }
 
@@ -107,12 +119,12 @@ namespace ExpressaoDinamica.Application.Service
             if (_data[_index].Result == null)
             {
                 args.Result = _data[_index].Value;
-                _index++;
+                //_index++;
                 return;
             }
 
             args.Result = _data[_index].Result;
-            _index++;
+            //_index++;
         }
 
         private void E_EvaluateFunction(string name, FunctionArgs args)
@@ -122,21 +134,10 @@ namespace ExpressaoDinamica.Application.Service
             if (function == null)
                 throw new Exception(string.Format("Função {0} não existe.", name));
 
-            var total = args.Parameters.Count();
-
-            // Calcula B
-            //for (int i = 0; i < total; i++)
-            //{
-            //    args.Parameters[i] = new Expression(args.Parameters[i].ParsedExpression);
-            //}
-
-            //args.Result = Convert.ToDouble(args.Parameters[total - 1].Evaluate());
-
-            // Calcula A
-            //var e = new Expression(function.Formula);
-            //e.EvaluateFunction += E_EvaluateFunction;
-            //e.EvaluateParameter += E_EvaluateParameter;
-            //args.Result = Convert.ToDouble(e.Evaluate());
+            var e = new Expression(function.Formula);
+            e.EvaluateFunction += E_EvaluateFunction;
+            e.EvaluateParameter += E_EvaluateParameter;
+            args.Result = Convert.ToDouble(e.Evaluate());
         }
     }
 }

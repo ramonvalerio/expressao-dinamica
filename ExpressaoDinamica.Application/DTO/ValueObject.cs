@@ -21,6 +21,7 @@ namespace ExpressaoDinamica.Application.DTO
         {
             Date = date;
             Value = value;
+            Result = 0;
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using ExpressaoDinamica.Application.DTO;
+using ExpressaoDinamica.Domain.Model;
+using ExpressaoDinamica.Infrastructure.Repository;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using NCalc;
-using ExpressaoDinamica.Application.DTO;
+using System;
 using System.Collections.Generic;
-using ExpressaoDinamica.Infrastructure.Repository;
-using ExpressaoDinamica.Domain.Model;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -36,17 +36,7 @@ namespace ExpressaoDinamica.Application.Service
                     foreach (var e in expressions)
                     {
                         var result = e.Evaluate();
-
-                        if (item.Result == null)
-                        {
-                            //item.Result = Convert.ToDouble(result);
-                            item.Result = Math.Round(Convert.ToDouble(result), 2);
-                        }
-                        else
-                        {
-                            //item.Result = item.Result + Convert.ToDouble(result);
-                            item.Result = item.Result + Math.Round(Convert.ToDouble(result), 2);
-                        }
+                        item.Result = Math.Round(Convert.ToDouble(result), 2);
                     }
 
                     _index++;
@@ -121,14 +111,9 @@ namespace ExpressaoDinamica.Application.Service
         private void E_EvaluateParameter(string name, ParameterArgs args)
         {
             if (_data[_index].Result == null)
-            {
                 args.Result = _data[_index].Value;
-                //_index++;
-                return;
-            }
-
-            args.Result = _data[_index].Result;
-            //_index++;
+            else
+                args.Result = _data[_index].Result;
         }
 
         private void E_EvaluateFunction(string name, FunctionArgs args)

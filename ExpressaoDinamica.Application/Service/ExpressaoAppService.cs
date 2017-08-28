@@ -56,28 +56,23 @@ namespace ExpressaoDinamica.Application.Service
 
         private List<Expression> getFunctionsByFormula(string input)
         {
-            var pattern = @"\b[^()]+\((.*)\)$";
+            //var pattern = @"\b[^()]+\((.*)\)$";
+            var pattern = @"(?<single>[A-z]+\s*\(\s*[A-z]+(,\s*[A-z])?\s*\))|(?<composition>[A-z]+\s*\(\s*[A-z]+\s*\(\s*[A-z]\s*\)\s*\))";
             var regex = new Regex(pattern, RegexOptions.None);
 
             var result = new List<Expression>();
             var functions = new List<string>();
 
-            do
+            var matchesResult = regex.Matches(input);
+
+            foreach (Match item in matchesResult)
             {
-                functions.Add(input);
-                input = regex.Split(input).SingleOrDefault(x => x != string.Empty);
-            } while (regex.IsMatch(input));
+                functions.Add(item.Value);
+            }
 
             for (int i = 0; i < functions.Count; i++)
             {
-                var functionFormat = string.Empty;
-
-                if ((i + 1) < functions.Count)
-                    functionFormat = functions[i].Replace(functions[i + 1], "X");
-                else
-                    functionFormat = functions[i];
-                
-                var expression = new Expression(functionFormat);
+                var expression = new Expression(functions[i].Replace(" ", ""));
                 expression.EvaluateFunction += E_EvaluateFunction;
                 expression.EvaluateParameter += E_EvaluateParameter;
                 result.Add(expression);
@@ -122,6 +117,33 @@ namespace ExpressaoDinamica.Application.Service
 
             if (function == null)
                 throw new Exception(string.Format("Função {0} não existe.", name));
+
+            if (function.AmountParameters != args.Parameters.Count())
+                throw new Exception(string.Format("Função {0} com quantidade de parâmetros inválido.", name));
+
+            foreach (var item in args.Parameters)
+            {
+                if (item.ParsedExpression != null)
+                {
+                    var pattern = @"(?<single>[A-z]+\s*\(\s*[A-z]+(,\s*[A-z])?\s*\))|(?<composition>[A-z]+\s*\(\s*[A-z]+\s*\(\s*[A-z]\s*\)\s*\))";
+                    var regex = new Regex(pattern, RegexOptions.None);
+
+                    if (regex.IsMatch(item.ParsedExpression.ToString()))
+                    {
+                        var e2 = new Expression(item.ParsedExpression);
+                        e2.EvaluateFunction += E_EvaluateFunction;
+                        e2.EvaluateParameter += E_EvaluateParameter;
+                        _data[_index].Result = Convert.ToDouble(e2.Evaluate());
+                    }
+                    else
+                    {
+                        var e2 = new Expression(function.Formula);
+                        e2.EvaluateFunction += E_EvaluateFunction;
+                        e2.EvaluateParameter += E_EvaluateParameter;
+                        _data[_index].Result = Convert.ToDouble(e2.Evaluate());
+                    }
+                }
+            }
 
             var e = new Expression(function.Formula);
             e.EvaluateFunction += E_EvaluateFunction;

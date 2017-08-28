@@ -29,15 +29,20 @@ namespace ExpressaoDinamica.Application.Service
 
             try
             {
-                var expressions = getFunctionsByFormula(expressao);
+                //var expressions = getFunctionsByFormula(expressao);
 
                 foreach (var item in _data)
                 {
-                    foreach (var e in expressions)
-                    {
-                        var result = e.Evaluate();
-                        item.Result = Math.Round(Convert.ToDouble(result), 2);
-                    }
+                    //foreach (var e in expressions)
+                    //{
+                    //    var result = e.Evaluate();
+                    //    item.Result = Math.Round(Convert.ToDouble(result), 2);
+                    //}
+
+                    var e = new Expression(expressao);
+                    e.EvaluateFunction += E_EvaluateFunction;
+                    e.EvaluateParameter += E_EvaluateParameter;
+                    item.Result = Math.Round(Convert.ToDouble(e.Evaluate()), 2);
 
                     _index++;
                 }
@@ -131,13 +136,6 @@ namespace ExpressaoDinamica.Application.Service
                     if (regex.IsMatch(item.ParsedExpression.ToString()))
                     {
                         var e2 = new Expression(item.ParsedExpression);
-                        e2.EvaluateFunction += E_EvaluateFunction;
-                        e2.EvaluateParameter += E_EvaluateParameter;
-                        _data[_index].Result = Convert.ToDouble(e2.Evaluate());
-                    }
-                    else
-                    {
-                        var e2 = new Expression(function.Formula);
                         e2.EvaluateFunction += E_EvaluateFunction;
                         e2.EvaluateParameter += E_EvaluateParameter;
                         _data[_index].Result = Convert.ToDouble(e2.Evaluate());

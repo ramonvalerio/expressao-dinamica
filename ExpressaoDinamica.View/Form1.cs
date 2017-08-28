@@ -24,6 +24,30 @@ namespace ExpressaoDinamica.View
             dgvResultado.AutoGenerateColumns = true;
 
             RefreshFunctionCombo();
+
+            var function = new Function();
+            function.Name = "A";
+            function.Formula = "x + 2";
+            function.AmountParameters = 1;
+
+            var function2 = new Function();
+            function2.Name = "B";
+            function2.Formula = "x + 3";
+            function2.AmountParameters = 1;
+
+            var function3 = new Function();
+            function3.Name = "C";
+            function3.Formula = "x + 100";
+            function3.AmountParameters = 1;
+
+            _formCreateFunction.FunctionRepository.Save(function);
+            _formCreateFunction.FunctionRepository.Save(function2);
+            _formCreateFunction.FunctionRepository.Save(function3);
+
+            RefreshFunctionCombo();
+
+            btnGenerateData_Click(null, null);
+            txtExpressao.Text = "A(   x,y) + B(x) + C  (   xxxx,   y)";
         }
 
         private void txtQtdIteracoes_KeyPress(object sender, KeyPressEventArgs e)
